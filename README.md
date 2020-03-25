@@ -1,4 +1,4 @@
-# Template
+# Gotenna
 
 React UI Template served through ExpressJS (NodeJS)
 
