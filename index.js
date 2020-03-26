@@ -16,7 +16,7 @@ app.get("/api/", async (req, res) => {
   try {
     let { page, ipv } = req.query;
     if (!page) page = 1;
-    if (!ipv) ipv = 25;
+    if (!ipv) ipv = 10;
     let data = await fs.readFileSync(
       path.resolve(`${__dirname}/datastore/imageurl.csv`),
       "utf-8"

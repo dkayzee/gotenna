@@ -1,8 +1,19 @@
-# Gotenna
+# Gotenna Photo Viewer
 
-React UI Template served through ExpressJS (NodeJS)
+## React UI served through ExpressJS (NodeJS)
 
-## Building and running on localhost
+### Packages Used
+
+- React
+- Express
+- Material-UI
+- Axios
+- Webpack
+- Babel
+- Eslint
+- Prettier
+
+## Production
 
 First install dependencies:
 
@@ -16,12 +27,18 @@ To create a production build:
 npm run build
 ```
 
-## Running
-
 To start the production environment:
 
 ```sh
 npm run start
+```
+
+## Development
+
+First install dependencies:
+
+```sh
+npm install
 ```
 
 To build and start a development environment:
