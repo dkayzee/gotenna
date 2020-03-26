@@ -2,6 +2,8 @@
 
 ## React UI served through ExpressJS (NodeJS)
 
+For the Kaban board click [here](https://trello.com/b/TELQGlPc/gotenna)
+
 ### Packages Used
 
 - React
