@@ -1,4 +1,4 @@
-/* eslint-disable no-console */
+/* eslint-disable no-console, array-callback-return, consistent-return */
 const express = require("express");
 const parser = require("body-parser");
 const morgan = require("morgan");
@@ -15,24 +15,36 @@ if (process.env.NODE_ENV) {
 app.get("/api/", async (req, res) => {
   try {
     let { page, ipv } = req.query;
+    const { height, width } = req.query;
     if (!page) page = 1;
     if (!ipv) ipv = 10;
     let data = await fs.readFileSync(
       path.resolve(`${__dirname}/datastore/imageurl.csv`),
       "utf-8"
     );
-    /*
-      THE COMMENTED CODE BELOW IS FOR WHEN 
-      WE WANT TO GRAB A FIXED DIMENSION BY ID
-    */
-    // data = data.split("\n").map(img => {
-    //   const id = img.split("/")[4];
-    //   return id;
-    // });
     data = data.split("\n");
+    if (height && width) {
+      data = data.filter(url => {
+        const imgHeight = url.split("/")[6];
+        const imgWidth = url.split("/")[5];
+        if (height.includes(imgHeight) && width.includes(imgWidth)) return url;
+      });
+    } else if (height) {
+      data = data.filter(url => {
+        const imgHeight = url.split("/")[6];
+        if (height.includes(imgHeight)) return url;
+      });
+    } else if (width) {
+      data = data.filter(url => {
+        const imgWidth = url.split("/")[5];
+        if (width.includes(imgWidth)) return url;
+      });
+    }
     const startIndex = (page - 1) * ipv;
     const endIndex = page * ipv;
-    res.json(data.slice(startIndex, endIndex));
+    const images = data.slice(startIndex, endIndex);
+    const total = data.length;
+    res.json({ images, total });
   } catch (err) {
     console.error(err.message);
     res.status(500).json({ message: err.message || "SERVER ERROR" });
