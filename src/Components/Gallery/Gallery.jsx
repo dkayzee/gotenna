@@ -85,7 +85,14 @@ export default () => {
           >
             {images.map(imageUrl => {
               const id = imageUrl.split("/")[4];
-              return <Card imageUrl={imageUrl} key={id} />;
+              const imgHeight = imageUrl.split("/")[6];
+              const imgWidth = imageUrl.split("/")[5];
+              return (
+                <Card
+                  imageUrl={imageUrl}
+                  key={`${id}-${imgWidth}x${imgHeight}`}
+                />
+              );
             })}
           </Grid>
           <Pagination
