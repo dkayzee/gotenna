@@ -1,14 +1,16 @@
 import React from "react";
-import { makeStyles } from "@material-ui/core/styles";
+import { makeStyles, withStyles } from "@material-ui/core/styles";
 import {
   Grid,
   Select,
   MenuItem,
   FormControl,
+  FormControlLabel,
   Input,
   InputLabel,
   Checkbox,
-  ListItemText
+  ListItemText,
+  Switch
 } from "@material-ui/core";
 
 const useStyles = makeStyles(theme => ({
@@ -35,6 +37,18 @@ const MenuProps = {
   }
 };
 
+const PurpleSwitch = withStyles({
+  switchBase: {
+    color: "white",
+    "&$checked": { color: "#5847b5" },
+    "&$checked + $track": {
+      backgroundColor: "#5847b5"
+    }
+  },
+  checked: {},
+  track: {}
+})(Switch);
+
 const widthDimensions = [100, 250, 300, 400];
 const heightDimensions = [100, 200, 250, 300];
 
@@ -44,7 +58,9 @@ export default ({
   height,
   handleHeightChange,
   width,
-  handleWidthChange
+  handleWidthChange,
+  grayscale,
+  handleGrayscaleChange
 }) => {
   const classes = useStyles();
   return (
@@ -123,6 +139,18 @@ export default ({
           ))}
         </Select>
       </FormControl>
+      <FormControlLabel
+        style={{ color: "white" }}
+        control={
+          // eslint-disable-next-line react/jsx-wrap-multilines
+          <PurpleSwitch
+            checked={grayscale}
+            onChange={handleGrayscaleChange}
+            name="grayscale"
+          />
+        }
+        label="Grayscale"
+      />
     </Grid>
   );
 };

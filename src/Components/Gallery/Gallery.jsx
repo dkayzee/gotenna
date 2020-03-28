@@ -15,6 +15,7 @@ export default () => {
   const [total, setTotal] = useState(50);
   const [height, setHeight] = useState([]);
   const [width, setWidth] = useState([]);
+  const [grayscale, setGrayscale] = useState(false);
 
   const handleIPVChange = event => {
     setItemsPerView(event.target.value);
@@ -35,6 +36,10 @@ export default () => {
     setPage(1);
   };
 
+  const handleGrayscaleChange = event => {
+    setGrayscale(event.target.checked);
+  };
+
   useEffect(() => {
     let API_URL = `/api?ipv=${itemsPerView}&page=${page}`;
     if (height.length) {
@@ -47,13 +52,16 @@ export default () => {
         API_URL += `&width[]=${w}`;
       }
     }
+    if (grayscale) {
+      API_URL += `&grayscale=${grayscale}`;
+    }
     const fetchData = async () => {
       const { data } = await axios(API_URL);
       setImages(data.images);
       setTotal(data.total);
     };
     fetchData();
-  }, [itemsPerView, page, height, width]);
+  }, [itemsPerView, page, height, width, grayscale]);
 
   useEffect(() => {
     setPagination(Math.max(total / itemsPerView, 1));
@@ -73,6 +81,8 @@ export default () => {
         handleHeightChange={handleHeightChange}
         width={width}
         handleWidthChange={handleWidthChange}
+        grayscale={grayscale}
+        handleGrayscaleChange={handleGrayscaleChange}
       />
       {images.length ? (
         <>

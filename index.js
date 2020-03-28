@@ -15,7 +15,7 @@ if (process.env.NODE_ENV) {
 app.get("/api/", async (req, res) => {
   try {
     let { page, ipv } = req.query;
-    const { height, width } = req.query;
+    const { height, width, grayscale } = req.query;
     if (!page) page = 1;
     if (!ipv) ipv = 10;
     let data = await fs.readFileSync(
@@ -38,6 +38,13 @@ app.get("/api/", async (req, res) => {
       data = data.filter(url => {
         const imgWidth = url.split("/")[5];
         if (width.includes(imgWidth)) return url;
+      });
+    }
+
+    if (grayscale) {
+      data = data.map(url => {
+        const newUrl = `${url}?grayscale`;
+        return newUrl;
       });
     }
     const startIndex = (page - 1) * ipv;

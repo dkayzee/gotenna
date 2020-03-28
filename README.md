@@ -1,4 +1,4 @@
-# Gotenna Photo Viewer
+# goTenna Photo Viewer
 
 ## React UI served through ExpressJS (NodeJS)
 
