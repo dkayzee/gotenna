@@ -1,5 +1,7 @@
 /* eslint-disable no-console, array-callback-return, consistent-return */
 const express = require("express");
+const passport = require("passport");
+const session = require("express-session");
 const parser = require("body-parser");
 const morgan = require("morgan");
 const path = require("path");
@@ -8,9 +10,23 @@ const fs = require("fs");
 const app = express();
 
 app.use(parser.json());
-if (process.env.NODE_ENV) {
-  app.use(morgan("dev"));
-}
+app.use(morgan("dev"));
+app.use(
+  session({
+    secret: "gotenna",
+    resave: false,
+    saveUninitialized: true,
+    cookie: {
+      secure: "auto",
+      maxAge: 1000 * 60 * 60 // 1 hour
+    }
+  })
+);
+
+app.use(passport.initialize());
+app.use(passport.session());
+
+require("./routes/auth.routes")(app);
 
 app.get("/api/", async (req, res) => {
   try {
@@ -70,6 +86,10 @@ app.use(
     path.join(`${__dirname}/node_modules/lazysizes/lazysizes.min.js`)
   )
 );
+
+app.get("/gotenna_favicon.ico", (req, res) => {
+  res.sendFile(path.resolve(`${__dirname}/dist/gotenna_favicon.ico`));
+});
 
 app.get("*", (req, res) => {
   res.sendFile(path.resolve(`${__dirname}/dist/index.html`));

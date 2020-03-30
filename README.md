@@ -14,6 +14,7 @@ For the Kaban board click [here](https://trello.com/b/TELQGlPc/gotenna)
 - Babel
 - Eslint
 - Prettier
+- Passport
 
 ## Production
 
