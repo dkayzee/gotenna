@@ -12,7 +12,8 @@
     "start": "node index.js",
     "react-dev": "webpack -d --mode development --watch",
     "server-dev": "NODE_ENV=\"development\" nodemon index.js",
-    "dev": "concurrently --kill-others-on-fail \"npm run server-dev\" \"npm run react-dev\""
+    "dev": "concurrently --kill-others-on-fail \"redis-server \" \"npm run server-dev\" \"npm run react-dev\"",
+    "dev:docker": "concurrently --kill-others-on-fail \"npm run server-dev\" \"npm run react-dev\""
   },
   "devDependencies": {
     "@babel/core": "^7.8.3",
@@ -54,6 +55,7 @@
     "passport-local": "^1.0.0",
     "react": "^16.12.0",
     "react-dom": "^16.12.0",
-    "react-hook-form": "^5.2.0"
+    "react-hook-form": "^5.2.0",
+    "redis": "^3.0.2"
   }
 }

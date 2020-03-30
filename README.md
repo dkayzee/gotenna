@@ -15,6 +15,37 @@ For the Kaban board click [here](https://trello.com/b/TELQGlPc/gotenna)
 - Eslint
 - Prettier
 - Passport
+- Redis
+
+## Redis Cache Server
+
+Redis is needed for this application!
+
+Ensure you have redis installed. If you don't follow these instructions:
+
+```sh
+brew install Redis
+brew services start Redis
+```
+
+Turn off redis when you're not using it:
+
+```sh
+brew services stop Redis
+```
+
+Don't want to download Redis and you are familiar with Docker?
+
+```sh
+docker run –name redis -p 6379:6379 -d redis
+```
+
+To stop the Redis container:
+
+```sh
+docker stop redis
+docker rm redis
+```
 
 ## Production
 
@@ -44,8 +75,14 @@ First install dependencies:
 npm install
 ```
 
-To build and start a development environment:
+To build and start a development environment that autostarts redis-server:
 
 ```sh
 npm run dev
+```
+
+To build and start a development environment with redis container (started by the user):
+
+```sh
+npm run dev:docker
 ```
